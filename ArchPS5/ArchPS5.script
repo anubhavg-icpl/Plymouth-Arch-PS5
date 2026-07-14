@@ -1,7 +1,8 @@
-Window.SetBackgroundTopColor (0.08627450980392157, 0.08627450980392157, 0.08627450980392157);           # Nice blue on top of the screen fading to
-Window.SetBackgroundBottomColor (0.08627450980392157, 0.08627450980392157, 0.08627450980392157);  # an equally nice brown on the bottom
+Window.SetBackgroundTopColor (0.08627450980392157, 0.08627450980392157, 0.08627450980392157);    # PS5 dark grey (#161616) — solid background
+Window.SetBackgroundBottomColor (0.08627450980392157, 0.08627450980392157, 0.08627450980392157);  # same top and bottom (no gradient)
 
-for (i = 0; i < 745; i++)
+# 746 frames: progress-0.png .. progress-745.png
+for (i = 0; i < 746; i++)
   flyingman_image[i] = Image("progress-" + i + ".png");
 flyingman_sprite = Sprite();
 
@@ -13,14 +14,14 @@ progress = 0;
 
 fun refresh_callback ()
   {
-    flyingman_sprite.SetImage(flyingman_image[Math.Int(progress / 3) % 745]);
+    flyingman_sprite.SetImage(flyingman_image[Math.Int(progress / 3) % 746]);
     progress++;
   }
-  
+
 Plymouth.SetRefreshFunction (refresh_callback);
 
-
-#sudo update-alternatives --install /lib/plymouth/themes/default.plymouth default.plymouth /lib/plymouth/themes/mytheme/mytheme.plymouth 100
-#sudo update-alternatives --config default.plymouth
-#sudo update-initramfs -u
-
+# Arch Linux install:
+#   sudo ./install.sh
+#   (or) sudo plymouth-set-default-theme -R ArchPS5
+# Requires 'plymouth' in the HOOKS array of /etc/mkinitcpio.conf
+# and 'quiet splash' on the kernel command line.
